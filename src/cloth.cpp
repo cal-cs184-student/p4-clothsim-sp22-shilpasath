@@ -32,6 +32,75 @@ Cloth::~Cloth() {
 
 void Cloth::buildGrid() {
   // TODO (Part 1): Build a grid of masses and springs.
+  double dx = width / num_width_points;
+  double dy = height / num_height_points;
+  float x, y, z;
+
+
+  for (int j = 0; j < num_height_points; j++) {
+      for (int i = 0; i < num_width_points; i++) {
+          bool pin = false;
+          if (orientation == HORIZONTAL) {
+              y = 1.0;
+              x = i * dx;
+              z = j * dy;
+          } else if (orientation == VERTICAL) {
+              z = rand() / RAND_MAX * (1/ 2000) - (1 / 1000);
+              x = i * dx;
+              y = j * dy;
+          }
+          for (int k = 0; k < pinned.size(); k++) {
+              if (i == pinned[k][0] && j == pinned[k][1]) {
+                  pin = true;
+              }
+          }
+          PointMass pm = PointMass(Vector3D(x,y,z), pin);
+          point_masses.push_back(pm);
+      }
+  }
+
+  //springs
+  for (int j = 0; j < num_height_points; j++) {
+      for (int i = 0; i < num_width_points; i++) {
+          int position = num_width_points * j + i;
+          PointMass *pm = &point_masses[position];
+
+          //Structural constraints exist between a point mass and the point mass to its left as well as the point mass above it.
+          if (j >= 1) {
+              //above
+              int positionAbove = i + (j-1) * num_width_points;
+              springs.emplace_back(Spring(pm, &point_masses[positionAbove], CGL::STRUCTURAL));
+          }
+          if (i >= 1) {
+              // left
+              int positionLeft = (i - 1) + j * num_width_points;
+              springs.emplace_back(Spring(pm, &point_masses[positionLeft], CGL::STRUCTURAL));
+          }
+          //Shearing constraints exist between a point mass and the point mass to its diagonal upper left as well as the point mass to its diagonal upper right.
+          if (i >= 1 && j >= 1) {
+              //upper left
+              int positionUpLeft = (i-1) + (j-1) * num_width_points;
+              springs.emplace_back(Spring(pm, &point_masses[positionUpLeft], CGL::SHEARING));
+          }
+          if (i < num_width_points - 1 && j >= 1) {
+              //upper right -- check not all the way to the right, and that upper is not 0
+              int positionUpRight = (i+1) + (j-1) * num_width_points;
+              springs.emplace_back(Spring(pm, &point_masses[positionUpRight], CGL::SHEARING));
+          }
+          //Bending constraints exist between a point mass and the point mass two away to its left as well as the point mass two above it.
+          if (i >= 2) {
+              //two to the left
+              int positionTwoLeft = (i-2) + j * num_width_points;
+              springs.emplace_back(Spring(pm, &point_masses[positionTwoLeft], CGL::BENDING));
+          }
+          if (j >=2) {
+              int positionTwoAbove = i + (j-2) * num_width_points;
+              springs.emplace_back(Spring(pm, &point_masses[positionTwoAbove], CGL::BENDING));
+          }
+      }
+  }
+
+
 
 }
 

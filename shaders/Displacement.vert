@@ -26,7 +26,9 @@ float h(vec2 uv) {
 
 void main() {
   // YOUR CODE HERE
-  
+  float s = h(in_uv);
+  vec4 position = in_position + in_normal * s * u_height_scaling;
+
   // (Placeholder code. You will want to replace it.)
   v_position = u_model * in_position;
   v_normal = normalize(u_model * in_normal);

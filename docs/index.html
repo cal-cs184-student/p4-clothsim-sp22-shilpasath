@@ -1,0 +1,285 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<style>
+  body {
+    padding: 100px;
+    width: 1000px;
+    margin: auto;
+    text-align: left;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+    color: #121212;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+</style>
+<title>CS 184 Project 4: Clothism</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
+</head>
+
+
+<body>
+
+<h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2022</h1>
+<h1 align="middle">Project 4: Clothism</h1>
+<h2 align="middle">Shilpa Sathyanathan, CS 184</h2>
+<h4 align="middle"> Project Link: https://github.com/cal-cs184-student/p4-clothsim-sp22-shilpasath</h4>
+<br><br>
+
+<div>
+
+<h2 align="middle">Overview</h2><p> In this project, I implemented a cloth simiulator using masses and springs. For pointmasses, I summed all of the external and spring correction forces, and then found each point mass's new position based on whether the point mass was pinned or not. After building this foundation, I then added other features, including collisons with other objects such as a sphere and plane. I also implemented self-collisions. For the final part of the project, I implemented different kinds of shaders including diffusion, Phong, texture mapping, bump mapping, displacement mapping, and mirror shading. </p>
+
+<h3 align="middle">Part 1: Masses and Springs</h3>
+
+<ol>
+  <li><div align="middle">
+    <table style="width=100%">
+      <tr>
+        <td>
+          <img src="images/1.png" align="middle" width="400px"/>
+        </td>
+        <td>
+          <img src="images/2+5.png" align="middle" width="400px"/>
+        </td>
+      </tr>
+      <br>
+      <tr>
+        <td>
+          <img src="images/3.png" align="middle" width="400px"/>
+	  <figcaption align="middle">without shearing</figcaption>
+        </td>
+        <td>
+          <img src="images/4.png" align="middle" width="400px"/>
+	  <figcaption align="middle">With Shearing</figcaption>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <img src="images/2+5.png" align="middle" width="400px"/>
+          <figcaption align="middle">All 3 constraints</figcaption>
+        </td>
+      </tr>
+	</tr>
+    </table>
+  </div></li>
+  <li> When there are 0 bounces, there is only direct lighting, so we cannot see any of the reflection from the two glass balls in the middle. Conversely, at 100 bounces, we can see the two balls clearly. The lighting looks pretty natural as it does in the real world. As bounces increase, we can see more detail. </li>
+</ol>
+
+
+<h3 align="middle">Part 2: Simulation via Numerical Integration</h3>
+<ol>
+  <div align="middle">
+    <table style="width=100%">
+      <tr>
+        <td>
+          <img src="images/p2_ks_500.png" align="middle" width="400px"/>
+		<figcaption align="middle">ks = 500 </figcaption>
+        </td>
+        <td>
+          <img src="images/p2_ks_5000.png" align="middle" width="400px"/>
+		<figcaption align="middle">ks = 5000</figcaption>
+        </td>
+      </tr>
+ <li> Since the ks value represents the spring constant which is how stretched or contracted When the ks value is low, the cloth is more flexible and springy (more bounce). On the other hand, when the ks value is high, the cloth is much more stiff and less easy to bend as shown in the above pictures (left is ks = 500, right is ks = 5000). </li>	    
+      <br>
+      <tr>
+        <td>
+          <img src="images/p2_density_1.png" align="middle" width="400px"/>
+	  <figcaption align="middle">density = 15 g / cm^2</figcaption>
+        </td>
+        <td>
+          <img src="images/p2_density_2.png" align="middle" width="400px"/>
+	  <figcaption align="middle">500 g / cm^2 </figcaption>
+        </td>
+      </tr>
+      <tr>
+       <td>
+          <img src="images/damping1.png" align="middle" width="400px"/>
+	  <figcaption align="middle">damping = 0</figcaption>
+        </td>
+        <td>
+          <img src="images/image12.png" align="middle" width="400px"/>
+	  <figcaption align="middle">damping = 1</figcaption>
+        </td>
+      </tr>
+	</tr>
+	<td>
+          <img src="images/p2_final.png" align="middle" width="400px"/>
+	  <figcaption align="middle">final Resting State With Original Parameters</figcaption>
+        </td>
+    </table>
+	<li> For density, higher density implies a heavier cloth, while lower density means the cloth is lighter. When I measured a density of 500 g/cm^2 shown on the right, the cloth is weighed down as shown by the clear parabolic divot in the simulation. The simulation on the left was of density = 15 g/cm^2, showing a much less drastic curve. </li>	
+	<li> Damping measures how oscillations in a system decay. Thus, when damping is close to 0, there is no energy lost so the cloth was able to bounce back and forth. However, when damping is closer to 1, there was only one bounce to the final state. For the damping = 1 state specifically, the movement of the cloth was very very slow– I had to decrease frames per second to speed it up. </li>
+  </div>
+</ol>
+  
+<h3 align="middle">Part 3: Handling collisions with other objects</h3>
+<ol>
+  <li> This part involved handling collisions. </li>
+  <div align="middle">
+    <table style="width=100%">
+      <tr>
+        <td>
+          <img src="images/p3_5000.png" align="middle" width="400px"/>
+	<figcaption align="middle">5000</figcaption>	
+        </td>
+        <td>
+          <img src="images/p3_500.png" align="middle" width="400px"/>
+		<figcaption align="middle">500</figcaption>
+        </td>
+      </tr>
+      <br>
+      <tr>
+        <td>
+          <img src="images/p3_50000.png" align="middle" width="400px"/>
+	  <figcaption align="middle">50000</figcaption>
+        </td>
+        <td>
+          <img src="images/p3_plane.png" align="middle" width="400px"/>
+	  <figcaption align="middle">Plane collision</figcaption>
+        </td>
+      </tr>
+	</tr>
+    </table>
+  </div>
+</ol>  
+
+<h3 align="middle">Part 4: Handling self-collisions</h3>
+<ol>
+  <li>  </li>
+  <div align="middle">
+    <table style="width=100%">
+      <tr>
+        <td>
+          <img src="images/p4_first.png" align="middle" width="400px"/>
+        </td>
+        <td>
+          <img src="images/p4_1_2.png" align="middle" width="400px"/>
+		<figcaption align="middle">500</figcaption>
+        </td>
+      </tr>
+      <br>
+      <tr>
+        <td>
+          <img src="images/p4_1_3.png" align="middle" width="400px"/>
+	  <figcaption align="middle">50000</figcaption>
+        </td>
+      </tr>
+	</tr>
+    </table>
+  </div>
+<li> When the density is high, I noticed that there are many more folds in the cloth. When the density is low (second picture), the folds are much larger.</li>
+  <div align="middle">
+    <table style="width=100%">
+      <tr>
+        <td>
+          <img src="images/p4_density_high.png" align="middle" width="400px"/>
+	<figcaption align="middle">Density is High</figcaption>	
+        </td>
+        <td>
+          <img src="images/p4_density_low.png" align="middle" width="400px"/>
+		<figcaption align="middle">Density is Low</figcaption>
+        </td>
+      </tr>
+      <br>
+	</tr>
+    </table>
+  </div>
+<li>When I change the spring constant, ks. When ks is low, such as a value of 10, shown by the first picture, the cloth is springy. When ks is high at 2500, the cloth is much less springy.</li>
+  <div align="middle">
+    <table style="width=100%">
+      <tr>
+        <td>
+          <img src="images/p4_ks_1.png" align="middle" width="400px"/>
+	<figcaption align="middle">ks is low </figcaption>	
+        </td>
+        <td>
+          <img src="images/p4_ks_high.png" align="middle" width="400px"/>
+		<figcaption align="middle">ks is high</figcaption>
+        </td>
+      </tr>
+      <br>
+	</tr>
+    </table>
+  </div>
+</ol>    
+  
+<h3 align="middle">Part 5: Shaders</h3>
+<ol>
+<li> Blinn-Phong Shading uses ambient, specular, and diffuse lighting in separate calculations to show more depth and clarity of images. </li>	
+<li>Only Ambient </li>
+<div align="middle">
+    <table style="width=100%">
+      <tr>
+        <td>
+          <img src="images/ambiient1.png" align="middle" width="400px"/>
+        </td>
+        <td>
+          <img src="images/ambient2.png" align="middle" width="400px"/>
+        </td>
+      </tr>
+      <br>
+	</tr>
+    </table>
+  </div>
+<li>Only Diffuse</li>
+<div align="middle">
+    <table style="width=100%">
+      <tr>
+        <td>
+          <img src="images/diffuse_1.png" align="middle" width="400px"/>
+        </td>
+        <td>
+          <img src="images/diffuse_2.png" align="middle" width="400px"/>
+        </td>
+      </tr>
+      <br>
+	</tr>
+    </table>
+  </div>
+<li>Only Specular </li>
+<div align="middle">
+    <table style="width=100%">
+      <tr>
+        <td>
+          <img src="images/specular 1.png" align="middle" width="400px"/>
+        </td>
+        <td>
+          <img src="images/specular_2.png" align="middle" width="400px"/>
+        </td>
+      </tr>
+      <br>
+	</tr>
+    </table>
+  </div>
+<li>Full Model </li>
+<div align="middle">
+    <table style="width=100%">
+      <tr>
+        <td>
+          <img src="images/fullmodel_1.png" align="middle" width="400px"/>
+        </td>
+        <td>
+          <img src="images/fullmodel2.png" align="middle" width="400px"/>
+        </td>
+      </tr>
+      <br>
+	</tr>
+    </table>
+  </div>
+<li>Mirror </li>
+<div align="middle">
+    <table style="width=100%">
+      <tr>
+        <td>
+          <img src="images/last.png" align="middle" width="400px"/>
+        </td
+      </tr>
+    </table>
+  </div>
+</ol>  
+</body>
+</html>

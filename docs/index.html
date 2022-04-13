@@ -71,7 +71,6 @@
 
 <h3 align="middle">Part 2: Simulation via Numerical Integration</h3>
 <ol>
-  <li> Environment lightning involves sampling the environment map in order to find its radiance at a particular point. I did both uniform and importance sampling in this part.  </li>
   <div align="middle">
     <table style="width=100%">
       <tr>
@@ -112,22 +111,175 @@
 	  <figcaption align="middle">final Resting State With Original Parameters</figcaption>
         </td>
     </table>
+	<li> For density, higher density implies a heavier cloth, while lower density means the cloth is lighter. When I measured a density of 500 g/cm^2 shown on the right, the cloth is weighed down as shown by the clear parabolic divot in the simulation. The simulation on the left was of density = 15 g/cm^2, showing a much less drastic curve. </li>	
+	<li> Damping measures how oscillations in a system decay. Thus, when damping is close to 0, there is no energy lost so the cloth was able to bounce back and forth. However, when damping is closer to 1, there was only one bounce to the final state. For the damping = 1 state specifically, the movement of the cloth was very very slow– I had to decrease frames per second to speed it up. </li>
   </div>
 </ol>
   
 <h3 align="middle">Part 3: Handling collisions with other objects</h3>
 <ol>
-  <li> Environment lightning involves sampling the environment map in order to find its radiance at a particular point. I did both uniform and importance sampling in this part.  </li>
+  <li> This part involved handling collisions. </li>
+  <div align="middle">
+    <table style="width=100%">
+      <tr>
+        <td>
+          <img src="images/p3_5000.png" align="middle" width="400px"/>
+	<figcaption align="middle">5000</figcaption>	
+        </td>
+        <td>
+          <img src="images/p3_500.png" align="middle" width="400px"/>
+		<figcaption align="middle">500</figcaption>
+        </td>
+      </tr>
+      <br>
+      <tr>
+        <td>
+          <img src="images/p3_50000.png" align="middle" width="400px"/>
+	  <figcaption align="middle">50000</figcaption>
+        </td>
+        <td>
+          <img src="images/p3_plane.png" align="middle" width="400px"/>
+	  <figcaption align="middle">Plane collision</figcaption>
+        </td>
+      </tr>
+	</tr>
+    </table>
+  </div>
 </ol>  
 
-<h3 align="middle">Part 3: Handling self-collisions</h3>
+<h3 align="middle">Part 4: Handling self-collisions</h3>
 <ol>
-  <li> Environment lightning involves sampling the environment map in order to find its radiance at a particular point. I did both uniform and importance sampling in this part.  </li>
+  <li>  </li>
+  <div align="middle">
+    <table style="width=100%">
+      <tr>
+        <td>
+          <img src="images/p4_first.png" align="middle" width="400px"/>
+        </td>
+        <td>
+          <img src="images/p4_1_2.png" align="middle" width="400px"/>
+		<figcaption align="middle">500</figcaption>
+        </td>
+      </tr>
+      <br>
+      <tr>
+        <td>
+          <img src="images/p4_1_3.png" align="middle" width="400px"/>
+	  <figcaption align="middle">50000</figcaption>
+        </td>
+      </tr>
+	</tr>
+    </table>
+  </div>
+<li> When the density is high, I noticed that there are many more folds in the cloth. When the density is low (second picture), the folds are much larger.</li>
+  <div align="middle">
+    <table style="width=100%">
+      <tr>
+        <td>
+          <img src="images/p4_density_high.png" align="middle" width="400px"/>
+	<figcaption align="middle">Density is High</figcaption>	
+        </td>
+        <td>
+          <img src="images/p4_density_low.png" align="middle" width="400px"/>
+		<figcaption align="middle">Density is Low</figcaption>
+        </td>
+      </tr>
+      <br>
+	</tr>
+    </table>
+  </div>
+<li>When I change the spring constant, ks. When ks is low, such as a value of 10, shown by the first picture, the cloth is springy. When ks is high at 2500, the cloth is much less springy.</li>
+  <div align="middle">
+    <table style="width=100%">
+      <tr>
+        <td>
+          <img src="images/p4_ks_1.png" align="middle" width="400px"/>
+	<figcaption align="middle">ks is low </figcaption>	
+        </td>
+        <td>
+          <img src="images/p4_ks_high.png" align="middle" width="400px"/>
+		<figcaption align="middle">ks is high</figcaption>
+        </td>
+      </tr>
+      <br>
+	</tr>
+    </table>
+  </div>
 </ol>    
   
 <h3 align="middle">Part 5: Shaders</h3>
 <ol>
-  <li> Environment lightning involves sampling the environment map in order to find its radiance at a particular point. I did both uniform and importance sampling in this part.  </li>
+<li> Blinn-Phong Shading uses ambient, specular, and diffuse lighting in separate calculations to show more depth and clarity of images. </li>	
+<li>Only Ambient </li>
+<div align="middle">
+    <table style="width=100%">
+      <tr>
+        <td>
+          <img src="images/ambiient1.png" align="middle" width="400px"/>
+        </td>
+        <td>
+          <img src="images/ambient2.png" align="middle" width="400px"/>
+        </td>
+      </tr>
+      <br>
+	</tr>
+    </table>
+  </div>
+<li>Only Diffuse</li>
+<div align="middle">
+    <table style="width=100%">
+      <tr>
+        <td>
+          <img src="images/diffuse_1.png" align="middle" width="400px"/>
+        </td>
+        <td>
+          <img src="images/diffuse_2.png" align="middle" width="400px"/>
+        </td>
+      </tr>
+      <br>
+	</tr>
+    </table>
+  </div>
+<li>Only Specular </li>
+<div align="middle">
+    <table style="width=100%">
+      <tr>
+        <td>
+          <img src="images/specular 1.png" align="middle" width="400px"/>
+        </td>
+        <td>
+          <img src="images/specular_2.png" align="middle" width="400px"/>
+        </td>
+      </tr>
+      <br>
+	</tr>
+    </table>
+  </div>
+<li>Full Model </li>
+<div align="middle">
+    <table style="width=100%">
+      <tr>
+        <td>
+          <img src="images/fullmodel_1.png" align="middle" width="400px"/>
+        </td>
+        <td>
+          <img src="images/fullmodel2.png" align="middle" width="400px"/>
+        </td>
+      </tr>
+      <br>
+	</tr>
+    </table>
+  </div>
+<li>Mirror </li>
+<div align="middle">
+    <table style="width=100%">
+      <tr>
+        <td>
+          <img src="images/last.png" align="middle" width="400px"/>
+        </td
+      </tr>
+    </table>
+  </div>
 </ol>  
 </body>
 </html>

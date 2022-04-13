@@ -36,7 +36,6 @@
 
 <ol>
   <li>For this part, I used two new materials, glass and mirrors. For mirror materials, I used the reflect function and reflected the wo vector around (0,0,1) and set that two w1. I set the pdf to 1 since there is no sampling, and then returned the reflectance / cosine factor. </li>
-  <li>For glass materials, I had to use the refraction function, which required the wo vector and returned the wi direction. In refract, I used Snell’s Law to find if there is total internal reflection as described by the spec.</li>
   <li><div align="middle">
     <table style="width=100%">
       <tr>

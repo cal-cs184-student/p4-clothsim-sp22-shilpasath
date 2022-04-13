@@ -1,1 +1,94 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<style>
+  body {
+    padding: 100px;
+    width: 1000px;
+    margin: auto;
+    text-align: left;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+    color: #121212;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+</style>
+<title>CS 184 Project 4: Clothism</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
+</head>
 
+
+<body>
+
+<h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2022</h1>
+<h1 align="middle">Project 4: Clothism</h1>
+<h2 align="middle">Shilpa Sathyanathan, CS 184</h2>
+<h4 align="middle"> Project Link: https://github.com/cal-cs184-student/p3-2-pathtracer-sp22-shilpa</h4>
+<br><br>
+
+<div>
+
+<h2 align="middle">Overview</h2><p> In this project, I implemented a cloth simiulator using masses and springs. For pointmasses, I summed all of the external and spring correction forces, and then found each point mass's new position based on whether the point mass was pinned or not. After building this foundation, I then added other features, including collisons with other objects such as a sphere and plane. I also implemented self-collisions. For the final part of the project, I implemented different kinds of shaders including diffusion, Phong, texture mapping, bump mapping, displacement mapping, and mirror shading. </p>
+
+<h3 align="middle">Part 1: Masses and Springs</h3>
+
+<ol>
+  <li>For this part, I used two new materials, glass and mirrors. For mirror materials, I used the reflect function and reflected the wo vector around (0,0,1) and set that two w1. I set the pdf to 1 since there is no sampling, and then returned the reflectance / cosine factor. </li>
+  <li>For glass materials, I had to use the refraction function, which required the wo vector and returned the wi direction. In refract, I used Snell’s Law to find if there is total internal reflection as described by the spec.</li>
+  <li><div align="middle">
+    <table style="width=100%">
+      <tr>
+        <td>
+          <img src="images/image1.png" align="middle" width="400px"/>
+        </td>
+        <td>
+          <img src="images/image2.png" align="middle" width="400px"/>
+        </td>
+      </tr>
+      <br>
+      <tr>
+        <td>
+          <img src="images/image3.png" align="middle" width="400px"/>
+        </td>
+        <td>
+          <img src="images/image4.png" align="middle" width="400px"/>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <img src="images/image5.png" align="middle" width="400px"/>
+        </td>
+        <td>
+          <img src="images/image6.png" align="middle" width="400px"/>
+        </td>
+      </tr>
+	</tr>
+    </table>
+  </div></li>
+  <li> When there are 0 bounces, there is only direct lighting, so we cannot see any of the reflection from the two glass balls in the middle. Conversely, at 100 bounces, we can see the two balls clearly. The lighting looks pretty natural as it does in the real world. As bounces increase, we can see more detail. </li>
+</ol>
+
+
+<h3 align="middle">Part 2: Simulation via Numerical Integration</h3>
+<ol>
+  <li> Environment lightning involves sampling the environment map in order to find its radiance at a particular point. I did both uniform and importance sampling in this part.  </li>
+</ol>
+  
+<h3 align="middle">Part 3: Handling collisions with other objects</h3>
+<ol>
+  <li> Environment lightning involves sampling the environment map in order to find its radiance at a particular point. I did both uniform and importance sampling in this part.  </li>
+</ol>  
+
+<h3 align="middle">Part 3: Handling self-collisions</h3>
+<ol>
+  <li> Environment lightning involves sampling the environment map in order to find its radiance at a particular point. I did both uniform and importance sampling in this part.  </li>
+</ol>    
+  
+<h3 align="middle">Part 5: Shaders</h3>
+<ol>
+  <li> Environment lightning involves sampling the environment map in order to find its radiance at a particular point. I did both uniform and importance sampling in this part.  </li>
+</ol>  
+</body>
+</html>

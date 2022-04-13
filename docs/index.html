@@ -35,32 +35,31 @@
 <h3 align="middle">Part 1: Masses and Springs</h3>
 
 <ol>
-  <li>For this part, I used two new materials, glass and mirrors. For mirror materials, I used the reflect function and reflected the wo vector around (0,0,1) and set that two w1. I set the pdf to 1 since there is no sampling, and then returned the reflectance / cosine factor. </li>
   <li><div align="middle">
     <table style="width=100%">
       <tr>
         <td>
-          <img src="images/image1.png" align="middle" width="400px"/>
+          <img src="images/1.png" align="middle" width="400px"/>
         </td>
         <td>
-          <img src="images/image2.png" align="middle" width="400px"/>
+          <img src="images/2+5.png" align="middle" width="400px"/>
         </td>
       </tr>
       <br>
       <tr>
         <td>
-          <img src="images/image3.png" align="middle" width="400px"/>
+          <img src="images/3.png" align="middle" width="400px"/>
+	  <figcaption align="middle">without shearing</figcaption>
         </td>
         <td>
-          <img src="images/image4.png" align="middle" width="400px"/>
+          <img src="images/4.png" align="middle" width="400px"/>
+	  <figcaption align="middle">With Shearing</figcaption>
         </td>
       </tr>
       <tr>
         <td>
-          <img src="images/image5.png" align="middle" width="400px"/>
-        </td>
-        <td>
-          <img src="images/image6.png" align="middle" width="400px"/>
+          <img src="images/2+5.png" align="middle" width="400px"/>
+          <figcaption align="middle">All 3 constraints</figcaption>
         </td>
       </tr>
 	</tr>
@@ -73,6 +72,47 @@
 <h3 align="middle">Part 2: Simulation via Numerical Integration</h3>
 <ol>
   <li> Environment lightning involves sampling the environment map in order to find its radiance at a particular point. I did both uniform and importance sampling in this part.  </li>
+  <div align="middle">
+    <table style="width=100%">
+      <tr>
+        <td>
+          <img src="images/p2_ks_500.png" align="middle" width="400px"/>
+		<figcaption align="middle">ks = 500 </figcaption>
+        </td>
+        <td>
+          <img src="images/p2_ks_5000.png" align="middle" width="400px"/>
+		<figcaption align="middle">ks = 5000</figcaption>
+        </td>
+      </tr>
+ <li> Since the ks value represents the spring constant which is how stretched or contracted When the ks value is low, the cloth is more flexible and springy (more bounce). On the other hand, when the ks value is high, the cloth is much more stiff and less easy to bend as shown in the above pictures (left is ks = 500, right is ks = 5000). </li>	    
+      <br>
+      <tr>
+        <td>
+          <img src="images/p2_density_1.png" align="middle" width="400px"/>
+	  <figcaption align="middle">density = 15 g / cm^2</figcaption>
+        </td>
+        <td>
+          <img src="images/p2_density_2.png" align="middle" width="400px"/>
+	  <figcaption align="middle">500 g / cm^2 </figcaption>
+        </td>
+      </tr>
+      <tr>
+       <td>
+          <img src="images/damping1.png" align="middle" width="400px"/>
+	  <figcaption align="middle">damping = 0</figcaption>
+        </td>
+        <td>
+          <img src="images/image12.png" align="middle" width="400px"/>
+	  <figcaption align="middle">damping = 1</figcaption>
+        </td>
+      </tr>
+	</tr>
+	<td>
+          <img src="images/p2_final.png" align="middle" width="400px"/>
+	  <figcaption align="middle">final Resting State With Original Parameters</figcaption>
+        </td>
+    </table>
+  </div>
 </ol>
   
 <h3 align="middle">Part 3: Handling collisions with other objects</h3>
